@@ -1,0 +1,113 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirements 15 & 16 — vector icons and social links
+   The glyphs come from Font Awesome's webfont, so each icon is
+   a character: sized with font-size, coloured with color, and
+   resolution-independent at any scale.
+   ========================================================= */
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-md;
+
+  &__link {
+    @include center;
+    width: 52px;
+    height: 52px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    color: inherit;
+    // The glyph scales with this, exactly like text.
+    font-size: 20px;
+    transition: transform $duration-base $ease-out,
+      background-color $duration-base $ease-out, color $duration-base $ease-out;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-4px) rotate(-6deg);
+      background-color: #fff;
+      color: $color-accent;
+    }
+  }
+}
+
+/* ---------------------------------------------------------
+   Contact stripe
+   --------------------------------------------------------- */
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xl;
+  width: 100%;
+
+  &__details {
+    display: grid;
+    gap: $space-lg;
+    grid-template-columns: 1fr;
+
+    @include respond("sm") {
+      grid-template-columns: repeat(2, auto);
+      gap: $space-xl;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    color: #fff;
+    font-size: 16px;
+
+    i {
+      // Fixed width keeps the labels aligned even though the glyphs
+      // themselves differ in width.
+      width: 22px;
+      font-size: 20px;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.45);
+      text-underline-offset: 4px;
+
+      &:hover,
+      &:focus-visible {
+        color: #fff;
+        text-decoration-color: #fff;
+      }
+    }
+  }
+}
+
+/* ---------------------------------------------------------
+   Footer social row — smaller, quieter treatment
+   --------------------------------------------------------- */
+.footer {
+  .social {
+    justify-content: center;
+
+    &__link {
+      width: 42px;
+      height: 42px;
+      border-width: 1px;
+      border-color: rgba(255, 255, 255, 0.28);
+      color: $color-text-invert-muted;
+      font-size: 16px;
+
+      &:hover,
+      &:focus-visible {
+        background-color: $color-accent;
+        border-color: $color-accent;
+        color: #fff;
+      }
+    }
+  }
+}

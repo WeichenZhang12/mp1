@@ -1,0 +1,90 @@
+@use "sass:map";
+@use "variables" as *;
+
+/* =========================================================
+   Reusable mixins
+   ========================================================= */
+
+/// Min-width media query from the $breakpoints map.
+/// @example scss
+///   @include respond("md") { ... }
+@mixin respond($key) {
+  @if not map.has-key($breakpoints, $key) {
+    @error "Unknown breakpoint `#{$key}`. Expected one of: #{map.keys($breakpoints)}.";
+  }
+  @media (min-width: map.get($breakpoints, $key)) {
+    @content;
+  }
+}
+
+/// Short-viewport media query.
+/// Width-based breakpoints alone are not enough: 1280x720 and
+/// 1366x768 are wide but vertically cramped once browser chrome is
+/// subtracted, so vertical rhythm has to respond to height too.
+@mixin respond-short($max: 800px) {
+  @media (max-height: $max) {
+    @content;
+  }
+}
+
+/// Max-width media query (for shrinking down rather than up).
+@mixin respond-below($key) {
+  @if not map.has-key($breakpoints, $key) {
+    @error "Unknown breakpoint `#{$key}`.";
+  }
+  @media (max-width: map.get($breakpoints, $key) - 1px) {
+    @content;
+  }
+}
+
+/// Centered, gutter-padded content column shared by every stripe.
+@mixin container($max: $container-max) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: $container-gutter;
+}
+
+/// Flexbox centering helper. `$axis` picks horizontal, vertical or both.
+@mixin center($axis: "both") {
+  display: flex;
+  @if $axis == "both" {
+    align-items: center;
+    justify-content: center;
+  } @else if $axis == "vertical" {
+    align-items: center;
+  } @else if $axis == "horizontal" {
+    justify-content: center;
+  }
+}
+
+/// Vertical rhythm for a full-width stripe. Fluid so the same rule
+/// holds up from 768px tablets to 1920px desktops.
+@mixin stripe-padding($scale: 1) {
+  padding-block: clamp(
+    #{$space-2xl * $scale * 0.7},
+    #{8vw * $scale},
+    #{$space-2xl * $scale * 1.6}
+  );
+}
+
+/// Fluid type: scale between a floor and a ceiling with the viewport.
+/// @param $min   size at narrow viewports
+/// @param $max   size at wide viewports
+/// @param $slope how fast it grows in between (vw units)
+@mixin fluid-font($min, $max, $slope: 2.5vw) {
+  font-size: clamp(#{$min}, #{$slope} + #{$min * 0.5}, #{$max});
+}
+
+/// Visually hide an element but keep it available to screen readers.
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

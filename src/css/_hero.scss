@@ -1,0 +1,117 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Page header stripe (the <header> band of requirement 1)
+   ========================================================= */
+
+.hero {
+  position: relative;
+  // The navbar is fixed, so the hero reserves room for it with padding
+  // instead of being offset by it. Flex + stretch lets the inner block
+  // fill whatever height is left without a calc() that would have to
+  // track the navbar's current size.
+  display: flex;
+  min-height: 100vh;
+  padding-top: var(--nav-height);
+  overflow: hidden;
+  background: linear-gradient(
+    150deg,
+    $color-ink 0%,
+    $color-ink-soft 55%,
+    $color-mint-deep 100%
+  );
+  color: $color-text-invert;
+
+  // Requirement 8 — this block stays optically centered in the hero
+  // no matter how the hero's own height changes.
+  /* =======================================================
+     Requirement 8 — the page's primary vertically-centered
+     element.
+
+     Nothing here encodes a height. The hero sizes itself from
+     the viewport (100vh) and the navbar (padding-top); this
+     block is stretched to fill whatever is left, then centers
+     its children in that space. So the centering survives a
+     window resize, the navbar shrinking by 28px, a longer
+     tagline, or the hero being given an arbitrary height in
+     devtools — there is no magic number to go stale.
+     ======================================================= */
+  &__inner {
+    @include container;
+    @include center;
+    flex: 1; // stretch to the hero's full height
+    flex-direction: column;
+    padding-block: $space-2xl;
+    text-align: center;
+
+    @include respond-short(720px) {
+      padding-block: $space-lg;
+    }
+
+    // Progressive enhancement: if the container is ever forced
+    // shorter than the content, `safe` falls back to start
+    // alignment instead of pushing the top of the content out
+    // of the scrollable area where it can never be reached.
+    // Browsers without support keep the plain `center` above.
+    justify-content: safe center;
+  }
+
+  &__avatar {
+    width: clamp(120px, 14vw, 168px);
+    height: clamp(120px, 14vw, 168px);
+    margin-bottom: $space-lg;
+
+    // Requirement 9 — 1280x720 and 1366x768 leave roughly 600px of
+    // usable height. Scale the portrait against the viewport's
+    // height there so the whole hero still fits on one screen.
+    @include respond-short(720px) {
+      width: clamp(96px, 18vh, 140px);
+      height: clamp(96px, 18vh, 140px);
+      margin-bottom: $space-md;
+    }
+    border: 4px solid rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: $shadow-lg;
+  }
+
+  &__title {
+    margin-bottom: $space-sm;
+    color: #fff;
+  }
+
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    margin-block: $space-md $space-lg;
+    color: rgba(255, 255, 255, 0.55);
+
+    &::before,
+    &::after {
+      content: "";
+      width: clamp(48px, 10vw, 110px);
+      height: 2px;
+      background-color: currentColor;
+    }
+  }
+
+  &__tagline {
+    max-width: 44ch;
+    margin-bottom: $space-xl;
+    color: $color-text-invert-muted;
+    font-size: clamp(16px, 1.6vw, 20px);
+
+    @include respond-short(720px) {
+      margin-bottom: $space-lg;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $space-md;
+  }
+}

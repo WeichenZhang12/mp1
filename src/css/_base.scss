@@ -1,0 +1,111 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Reset + element defaults
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  // Requirement 5 gets a JS fallback, but native smooth scrolling
+  // handles anchor jumps in every modern browser.
+  scroll-behavior: smooth;
+  // Anchored sections stop below the navbar instead of under it.
+  // Deliberately the *compact* height, not var(--nav-height): any
+  // anchor jump ends up scrolled far enough that the bar has already
+  // shrunk by the time the scroll settles, so measuring against the
+  // expanded height would leave a gap above each section.
+  scroll-padding-top: $nav-height-small;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: $color-paper;
+  color: $color-text;
+  font-family: $font-body;
+  font-size: 17px;
+  font-weight: $weight-regular;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  // Stripes are full-bleed; nothing should scroll sideways.
+  // `clip` rather than `hidden`: `hidden` turns <body> into a scroll
+  // container, which silently breaks the sticky navbar.
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 $space-md;
+  font-family: $font-display;
+  font-weight: $weight-bold;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  @include fluid-font(38px, 72px, 5vw);
+}
+
+h2 {
+  @include fluid-font(30px, 46px, 3.4vw);
+}
+
+h3 {
+  @include fluid-font(20px, 24px, 1.6vw);
+}
+
+p {
+  margin: 0 0 $space-md;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+  transition: color $duration-fast $ease-out;
+
+  &:hover,
+  &:focus-visible {
+    color: $color-accent-deep;
+  }
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}

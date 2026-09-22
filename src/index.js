@@ -11,3 +11,6 @@ import './css/main.scss';
 
 // Scripts
 import './js/main.js';
+import './js/carousel.js';
+import './js/modal.js';
+import './js/reel.js';

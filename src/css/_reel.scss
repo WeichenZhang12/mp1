@@ -1,0 +1,64 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirement 12 — embedded HTML5 video
+   A full-bleed background video band: the <video> is stretched
+   behind the stripe's content the way a background image would
+   be, autoplaying on loop with no player chrome.
+   ========================================================= */
+
+.video-band {
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+  @include center;
+  background-color: $color-ink; // shown until the first frame decodes
+  color: $color-text-invert;
+
+  @include respond-short {
+    min-height: 60vh;
+  }
+
+  /* object-fit: cover is what makes this behave like
+     background-size: cover — the frame fills the band and the
+     overflow is cropped, instead of letterboxing. */
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // Purely decorative: never intercept clicks or drags.
+    pointer-events: none;
+  }
+
+  /* Without a scrim the text's contrast changes frame by frame as
+     the footage moves underneath it. */
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba($color-ink, 0.78) 0%,
+      rgba($color-ink, 0.62) 45%,
+      rgba($color-ink, 0.84) 100%
+    );
+  }
+
+  /* Both layers above are absolutely positioned, so the content
+     needs to be lifted out of their stacking order. */
+  .stripe__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .stripe__eyebrow {
+    color: $color-mint;
+  }
+
+  .stripe__lede {
+    color: $color-text-invert-muted;
+    margin-bottom: 0;
+  }
+}

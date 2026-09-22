@@ -1,0 +1,100 @@
+/* =========================================================
+   Design tokens
+   SCSS variables feed the CSS custom properties below, so
+   values can be reused both at compile time (maps, math,
+   mixins) and at runtime (media queries, JS-driven states).
+   ========================================================= */
+
+// ---- Palette -------------------------------------------------
+$color-ink: #0f1c2e; // deep navy, dark stripes + footer
+$color-ink-soft: #1b2d45; // raised surfaces on dark stripes
+$color-paper: #ffffff; // light stripes
+$color-paper-alt: #f2f5f9; // tinted light stripes
+$color-accent: #f2784b; // warm coral, primary accent
+$color-accent-deep: #d95f36; // hover / pressed accent
+$color-mint: #3fb8a0; // secondary accent
+$color-mint-deep: #1d5449; // deep teal for gradients
+
+$color-text: #1c2b3a;
+$color-text-muted: #5b6b7d;
+$color-text-invert: #f4f7fb;
+$color-text-invert-muted: rgba(244, 247, 251, 0.72);
+
+// ---- Typography ----------------------------------------------
+$font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+$font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-bold: 700;
+
+// ---- Spacing scale -------------------------------------------
+$space-unit: 8px;
+$space-xs: $space-unit * 0.5; //  4px
+$space-sm: $space-unit; //  8px
+$space-md: $space-unit * 2; // 16px
+$space-lg: $space-unit * 3; // 24px
+$space-xl: $space-unit * 5; // 40px
+$space-2xl: $space-unit * 8; // 64px
+
+// ---- Layout --------------------------------------------------
+$container-max: 1140px;
+$container-gutter: $space-lg;
+
+$nav-height-large: 88px;
+$nav-height-small: 60px;
+
+// ---- Breakpoints ---------------------------------------------
+// Keyed to the resolutions the assignment is graded at.
+$breakpoints: (
+  "sm": 640px,
+  // phones / narrow
+  "md": 768px,
+  // 768x1024 portrait tablet
+  "lg": 1024px,
+  // 1024x768
+  "xl": 1280px, // 1280x720 and up
+);
+
+// ---- Motion --------------------------------------------------
+$ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+$duration-fast: 180ms;
+$duration-base: 320ms;
+$duration-slow: 600ms;
+
+$radius-sm: 6px;
+$radius-md: 12px;
+$radius-lg: 20px;
+
+$shadow-sm: 0 2px 8px rgba(15, 28, 46, 0.08);
+$shadow-md: 0 12px 32px rgba(15, 28, 46, 0.12);
+$shadow-lg: 0 24px 60px rgba(15, 28, 46, 0.18);
+
+:root {
+  --color-ink: #{$color-ink};
+  --color-paper: #{$color-paper};
+  --color-accent: #{$color-accent};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --container-max: #{$container-max};
+
+  /* ---- Navbar: expanded state (top of page) ----------------
+     Requirement 4 is driven entirely by these three variables.
+     Anything that depends on the bar's size — the bar itself,
+     its type, and html's scroll-padding — reads them, so the
+     whole resize is one class toggle with nothing to keep in
+     sync by hand. */
+  --nav-height: clamp(68px, 8vw, #{$nav-height-large});
+  --nav-brand-size: clamp(18px, 1.9vw, 25px);
+  --nav-link-size: clamp(12px, 1.05vw, 15px);
+}
+
+/* ---- Navbar: compact state (scrolled down) ----------------
+   Set on <html> rather than on .navbar so that scroll-padding-top,
+   which lives on html, shrinks along with the bar and anchor
+   targets keep landing flush beneath it. */
+:root.is-compact {
+  --nav-height: #{$nav-height-small};
+  --nav-brand-size: clamp(15px, 1.4vw, 19px);
+  --nav-link-size: clamp(11px, 0.85vw, 13px);
+}

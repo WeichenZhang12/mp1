@@ -1,0 +1,109 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirement 10 — fixed-position background image
+   `background-attachment: fixed` pins the image to the
+   viewport rather than the element, so the section behaves
+   like a window the page scrolls past.
+   ========================================================= */
+
+.parallax {
+  position: relative;
+  background-image: url("../assets/process-bg.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $color-text-invert;
+  // The image is decorative; if it fails to load, the copy still has
+  // a dark surface to sit on and stays readable.
+  background-color: $color-ink;
+
+  /* Dark scrim. Without it the text's contrast depends entirely on
+     whichever part of the photograph happens to be behind it. */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba($color-ink, 0.82) 0%,
+      rgba($color-ink, 0.72) 50%,
+      rgba($color-ink, 0.86) 100%
+    );
+  }
+
+  /* The scrim is absolutely positioned, so the content needs its own
+     stacking context to sit above it. */
+  .stripe__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .stripe__eyebrow {
+    color: $color-mint;
+  }
+
+  .stripe__lede {
+    color: $color-text-invert-muted;
+  }
+
+  /* iOS Safari does not honour `background-attachment: fixed`: it
+     either ignores it or repaints the image every frame, which looks
+     broken and drops the frame rate. Detect touch-primary devices and
+     fall back to a normal scrolling background. */
+  @media (hover: none) and (pointer: coarse) {
+    background-attachment: scroll;
+  }
+}
+
+/* ---------------------------------------------------------
+   Stat grid
+   --------------------------------------------------------- */
+.stats {
+  display: grid;
+  gap: $space-xl $space-lg;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+
+  @include respond("lg") {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__value {
+    font-family: $font-display;
+    font-size: clamp(34px, 4.5vw, 56px);
+    font-weight: $weight-bold;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  &__unit {
+    color: $color-mint;
+  }
+
+  &__label {
+    margin-top: $space-sm;
+    color: $color-text-invert-muted;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 22ch;
+  }
+
+  /* Thin rule between columns, drawn only where there is a neighbour
+     to separate — no trailing divider at the end of a row. */
+  @include respond("lg") {
+    &:not(:last-child) {
+      border-right: 1px solid rgba(255, 255, 255, 0.14);
+    }
+  }
+}

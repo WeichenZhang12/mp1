@@ -1,0 +1,161 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirement 1 — full-width horizontal stripes
+   Every top-level band spans 100% of the viewport width and
+   owns its own background; only the inner .stripe__inner is
+   width-capped and centered, which keeps content aligned in
+   one column down the whole page.
+   ========================================================= */
+
+.stripe {
+  position: relative;
+  width: 100%;
+  @include stripe-padding;
+
+  // Requirement 9 — on short viewports (1280x720, 1366x768) the
+  // generous vertical rhythm eats the screen before the section's
+  // actual content appears. Tighten it rather than forcing the user
+  // to scroll past whitespace.
+  @include respond-short {
+    padding-block: clamp(#{$space-xl}, 5vh, #{$space-2xl});
+  }
+
+  &__inner {
+    @include container;
+    // Requirement 8 — content of every stripe is horizontally centered.
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ---- Stripe color variants (alternating rhythm) ---- */
+  &--paper {
+    background-color: $color-paper;
+    color: $color-text;
+  }
+
+  &--alt {
+    background-color: $color-paper-alt;
+    color: $color-text;
+  }
+
+  &--ink {
+    background-color: $color-ink;
+    color: $color-text-invert;
+
+    .stripe__eyebrow {
+      color: $color-mint;
+    }
+
+    .stripe__lede {
+      color: $color-text-invert-muted;
+    }
+  }
+
+  &--accent {
+    background-color: $color-accent;
+    color: #fff;
+
+    .stripe__eyebrow,
+    .stripe__lede {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  /* ---- Shared heading block ---- */
+  &__eyebrow {
+    margin-bottom: $space-sm;
+    color: $color-accent;
+    font-family: $font-display;
+    font-size: 13px;
+    font-weight: $weight-bold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin-bottom: $space-md;
+  }
+
+  &__lede {
+    max-width: 62ch;
+    margin-bottom: $space-xl;
+    color: $color-text-muted;
+    font-size: 1.05rem;
+
+    @include respond-short {
+      margin-bottom: $space-lg;
+    }
+  }
+
+  /* Decorative rule under a section title, echoing the reference
+     layout's star divider but built from pure CSS. */
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    margin-bottom: $space-xl;
+    color: currentColor;
+
+    @include respond-short {
+      margin-bottom: $space-lg;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      width: clamp(40px, 8vw, 80px);
+      height: 2px;
+      background-color: currentColor;
+      opacity: 0.35;
+    }
+  }
+}
+
+/* Reusable centered column for prose inside a stripe. */
+.measure {
+  max-width: 68ch;
+  margin-inline: auto;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-md $space-xl;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-color: $color-accent;
+  color: #fff;
+  font-family: $font-display;
+  font-size: 15px;
+  font-weight: $weight-bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background-color $duration-fast $ease-out,
+    transform $duration-fast $ease-out, box-shadow $duration-fast $ease-out;
+
+  &:hover,
+  &:focus-visible {
+    background-color: $color-accent-deep;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  &--ghost {
+    background-color: transparent;
+    border-color: currentColor;
+    color: inherit;
+
+    &:hover,
+    &:focus-visible {
+      background-color: currentColor;
+      box-shadow: none;
+    }
+  }
+}

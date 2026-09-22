@@ -1,0 +1,235 @@
+@use "sass:map";
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirement 6 — carousel
+   One horizontal track holding every slide, moved by
+   translateX(-index * 100%). Transforms are composited, so
+   sliding never triggers layout or paint on the slides.
+   ========================================================= */
+
+.carousel {
+  position: relative;
+  width: 100%;
+  // Requirement 9 — a gutter wide enough for the arrows at EVERY
+  // width. Overlaying them on the slide works on a desktop mock-up
+  // but covers the copy at 768px, so the arrows always get their own
+  // column outside the slide instead.
+  padding-inline: clamp(48px, 6vw, 68px);
+
+  /* The window. Anything outside the current slide is clipped. */
+  &__viewport {
+    overflow: hidden;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+  }
+
+  &__track {
+    display: flex;
+    cursor: grab;
+    // Vertical panning stays with the browser (the page must still
+    // scroll); horizontal gestures are ours to handle.
+    touch-action: pan-y;
+    // Stops a drag from selecting slide text or starting the
+    // browser's native image drag.
+    user-select: none;
+    -webkit-user-drag: none;
+    // The slide index lives in CSS as a variable that JS writes, so
+    // the animation stays entirely in the stylesheet.
+    transform: translateX(calc(var(--slide-index, 0) * -100%));
+    transition: transform $duration-slow $ease-out;
+
+    // Mid-drag the track follows the finger with no easing.
+    &.is-dragging {
+      transition: none;
+      cursor: grabbing;
+    }
+  }
+
+  &__slide {
+    // 0 0 100% — never grow, never shrink, exactly one viewport wide.
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  /* ---- Arrows ---- */
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    // Requirement 8 — the arrows stay vertically centred on the
+    // carousel however tall the current slide happens to be.
+    transform: translateY(-50%);
+    z-index: 2;
+
+    display: grid;
+    place-items: center;
+    width: clamp(40px, 4vw, 52px);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: rgba($color-ink, 0.72);
+    color: #fff;
+    transition: background-color $duration-fast $ease-out,
+      transform $duration-fast $ease-out, opacity $duration-fast $ease-out;
+
+    svg {
+      width: 45%;
+      height: 45%;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-accent;
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    // Sit in the gutter the carousel's padding reserves, never on
+    // top of the slide.
+    &--prev {
+      left: 0;
+    }
+
+    &--next {
+      right: 0;
+    }
+  }
+
+  /* ---- Dot indicators ---- */
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: $space-sm;
+    margin-top: $space-lg;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: rgba($color-ink, 0.22);
+    transition: background-color $duration-fast $ease-out,
+      transform $duration-fast $ease-out;
+
+    &:hover {
+      background-color: rgba($color-ink, 0.45);
+    }
+
+    &.is-active {
+      background-color: $color-accent;
+      transform: scale(1.35);
+    }
+  }
+}
+
+/* =========================================================
+   Slide contents
+   ========================================================= */
+
+.slide {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100%;
+  text-align: left;
+
+  // Two columns only from 1024px up. At 768px the copy column would
+  // be about 280px wide, which breaks the lines into unreadable
+  // fragments, so the tablet layout stacks instead.
+  @include respond("lg") {
+    // Image gets the larger share; the copy column stays readable.
+    grid-template-columns: 1.15fr 1fr;
+  }
+
+  &__media {
+    position: relative;
+    overflow: hidden;
+    // Fixed ratio while stacked so the slide keeps a predictable
+    // height; side by side, the image fills the row instead.
+    aspect-ratio: 16 / 9;
+
+    @include respond("lg") {
+      aspect-ratio: auto;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none; // never swallow a swipe
+  }
+
+  /* Requirement 8 — second instance of vertical centering.
+     The column's height is dictated by the image beside it, and each
+     slide's copy is a different length, so this block is centered
+     against a box whose height it does not control and cannot predict.
+     In a column flex container the block axis is the MAIN axis, so
+     vertical centering is justify-content — align-items would center
+     it horizontally instead. */
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // vertical
+    align-items: flex-start; // horizontal: copy stays left-aligned
+    padding: clamp(#{$space-lg}, 4vw, #{$space-2xl});
+
+    @include respond-short {
+      padding: $space-lg $space-xl;
+    }
+  }
+
+  &__eyebrow {
+    margin-bottom: $space-sm;
+    font-family: $font-display;
+    font-size: 12px;
+    font-weight: $weight-bold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin-bottom: $space-md;
+  }
+
+  &__text {
+    margin-bottom: $space-lg;
+    color: $color-text-muted;
+    font-size: 16px;
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+  }
+
+  &__tag {
+    padding: 4px $space-md;
+    border: 1px solid rgba($color-ink, 0.18);
+    border-radius: 999px;
+    font-size: 13px;
+    color: $color-text-muted;
+  }
+}
+
+/* Per-slide background tints, generated from a map so adding a
+   slide is a one-line change rather than a new block of CSS. */
+$slide-tints: (
+  1: #fdf1ea,
+  2: #eaf4f1,
+  3: #eef0f8,
+  4: #fbf3e4,
+);
+
+@each $index, $tint in $slide-tints {
+  .slide--tint-#{$index} {
+    background-color: $tint;
+
+    .slide__eyebrow {
+      color: $color-accent-deep;
+    }
+  }
+}

@@ -1,0 +1,164 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Navigation bar — base appearance only.
+   Sticky behaviour (req. 2), position indicator (req. 3) and
+   shrink-on-scroll (req. 4) build on top of these rules.
+   ========================================================= */
+
+.navbar {
+  // Requirement 2 — pinned to the top of the viewport for the whole
+  // page. `fixed` rather than `sticky` because requirement 4 changes
+  // the bar's height on scroll: a sticky bar still occupies its slot
+  // in normal flow, so shrinking it would yank every stripe below it
+  // upward by the difference. Fixed positioning takes it out of flow
+  // entirely, so the resize is purely visual.
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  width: 100%;
+  height: var(--nav-height);
+  background-color: $color-ink;
+  color: $color-text-invert;
+  transition: height $duration-base $ease-out,
+    background-color $duration-base $ease-out,
+    box-shadow $duration-base $ease-out;
+
+  // Lifted off the page only once it is actually pinned, so the bar
+  // sits flat against the hero at rest.
+  &.is-stuck {
+    background-color: rgba($color-ink, 0.94);
+    backdrop-filter: blur(10px);
+    box-shadow: $shadow-md;
+  }
+
+  &__inner {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    height: 100%;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $color-text-invert;
+    font-family: $font-display;
+    // Requirement 4 — type scales down with the bar.
+    font-size: var(--nav-brand-size);
+    font-weight: $weight-bold;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: font-size $duration-base $ease-out;
+
+    &:hover,
+    &:focus-visible {
+      color: #fff;
+    }
+
+    em {
+      color: $color-accent;
+      font-style: normal;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: clamp(#{$space-sm}, 2vw, #{$space-lg});
+  }
+
+  &__link {
+    position: relative;
+    display: block;
+    padding: $space-xs $space-sm;
+    border-radius: $radius-sm;
+    color: $color-text-invert-muted;
+    font-family: $font-display;
+    font-size: var(--nav-link-size);
+    font-weight: $weight-medium;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color $duration-fast $ease-out,
+      background-color $duration-fast $ease-out,
+      font-size $duration-base $ease-out;
+
+    /* Requirement 3 — the indicator itself. Kept as a pseudo-element
+       so toggling `.is-active` animates a transform rather than
+       changing layout, which would jitter the whole bar. */
+    &::after {
+      content: "";
+      position: absolute;
+      left: $space-sm;
+      right: $space-sm;
+      bottom: 0;
+      height: 2px;
+      background-color: $color-accent;
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform $duration-base $ease-out;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: #fff;
+    }
+
+    &.is-active {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.08);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  @include respond-below("md") {
+    &__menu {
+      gap: 2px;
+    }
+
+    // Tighten spacing only — the font size stays on its variable so
+    // the shrink-on-scroll still happens at tablet widths.
+    &__link {
+      padding: $space-xs 4px;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  // Below ~640px seven menu items cannot fit on one line at any
+  // readable size. Rather than hiding the overflow (the items would
+  // still be there, just unreachable), let the menu scroll sideways
+  // on its own — the whole nav stays usable on a phone.
+  @include respond-below("sm") {
+    &__inner {
+      gap: $space-sm;
+    }
+
+    &__menu {
+      flex: 1;
+      justify-content: flex-end;
+      overflow-x: auto;
+      // The bar is short; a scrollbar inside it would eat the labels.
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__link {
+      white-space: nowrap;
+    }
+  }
+}

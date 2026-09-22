@@ -1,13 +1,770 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>MP1</title>
-    </head>
-    <body>
-        <h1>Hello World! Welcome to MP1!</h1>
-        <img src="assets/image.jpg">
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Weichen Zhang — MSCS student at the University of Illinois Urbana-Champaign. Distributed systems, cloud infrastructure and applied machine learning."
+    />
+    <title>Weichen Zhang — Software Engineer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Requirement 15 — scalable vector icons delivered through CSS.
+         Font Awesome ships glyphs in a webfont and exposes them as
+         `content` on ::before, so an icon is styled with font-size and
+         color like any other text and stays sharp at any scale. -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- ================= NAVIGATION ================= -->
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a class="navbar__brand" href="#home">Weichen<em>.</em></a>
+
+        <ul class="navbar__menu" id="nav-menu">
+          <li><a class="navbar__link" href="#about">About</a></li>
+          <li><a class="navbar__link" href="#skills">Skills</a></li>
+          <li><a class="navbar__link" href="#work">Work</a></li>
+          <li><a class="navbar__link" href="#impact">Impact</a></li>
+          <li><a class="navbar__link" href="#projects">Projects</a></li>
+          <li><a class="navbar__link" href="#reel">Reel</a></li>
+          <li><a class="navbar__link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ================= HEADER / HERO ================= -->
+    <header class="hero" id="home">
+      <div class="hero__inner">
+        <img
+          class="hero__avatar"
+          src="assets/portrait.jpg"
+          alt="Portrait of Weichen Zhang"
+          width="336"
+          height="336"
+        />
+        <h1 class="hero__title">Weichen Zhang</h1>
+        <div class="hero__divider" aria-hidden="true"></div>
+        <p class="hero__tagline">
+          MSCS student at Illinois, building distributed systems and cloud
+          infrastructure that hold up under load.
+        </p>
+        <div class="hero__actions">
+          <a class="btn" href="#work">View my work</a>
+          <a class="btn btn--ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ================= ABOUT ================= -->
+      <section class="stripe stripe--paper" id="about">
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">About</p>
+          <h2 class="stripe__title">Systems that stay up</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <div class="measure">
+            <p>
+              I am a Master's student in Computer Science at the University of
+              Illinois Urbana-Champaign, where I study distributed systems,
+              databases and operating systems. Before Illinois I earned my BS
+              in Computer Science at UC Davis.
+            </p>
+            <p>
+              Four internships have put me on both sides of the stack: an
+              LLM-powered failure triage pipeline at Solidigm, IoT telemetry
+              infrastructure at CITRIS, a high-throughput Node.js backend at
+              Elile AI, and an ordering platform at UC Davis that forty
+              thousand students actually used.
+            </p>
+            <p>
+              The thread running through all of it is latency and
+              failure. Making a p99 number drop, keeping a cluster consistent
+              when a node disappears, finding the cache layer that turns a
+              slow page into a fast one — those are the problems I keep coming
+              back to.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SKILLS (multi-column) ================= -->
+      <section class="stripe stripe--alt" id="skills">
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">Skills</p>
+          <h2 class="stripe__title">What I build with</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <p class="stripe__lede">
+            Four years of internships across distributed systems, cloud
+            infrastructure and applied machine learning.
+          </p>
+
+          <div class="pillars">
+            <article class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <h3 class="pillar__title">Languages</h3>
+              <ul class="pillar__list">
+                <li class="pillar__item">Python</li>
+                <li class="pillar__item">Java</li>
+                <li class="pillar__item">TypeScript</li>
+                <li class="pillar__item">C++</li>
+                <li class="pillar__item">Go</li>
+                <li class="pillar__item">Swift</li>
+                <li class="pillar__item">HTML/CSS</li>
+              </ul>
+            </article>
+
+            <article class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <h3 class="pillar__title">Frameworks</h3>
+              <ul class="pillar__list">
+                <li class="pillar__item">Spring Boot</li>
+                <li class="pillar__item">React</li>
+                <li class="pillar__item">Node.js</li>
+                <li class="pillar__item">Express</li>
+                <li class="pillar__item">Flask</li>
+                <li class="pillar__item">Django</li>
+                <li class="pillar__item">PyTorch</li>
+                <li class="pillar__item">Spark</li>
+              </ul>
+            </article>
+
+            <article class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <i class="fa-solid fa-cloud"></i>
+              </div>
+              <h3 class="pillar__title">Cloud &amp; DevOps</h3>
+              <ul class="pillar__list">
+                <li class="pillar__item">AWS</li>
+                <li class="pillar__item">Azure</li>
+                <li class="pillar__item">GCP</li>
+                <li class="pillar__item">Docker</li>
+                <li class="pillar__item">Kubernetes</li>
+                <li class="pillar__item">Terraform</li>
+                <li class="pillar__item">Jenkins</li>
+                <li class="pillar__item">Linux</li>
+              </ul>
+            </article>
+
+            <article class="pillar">
+              <div class="pillar__icon" aria-hidden="true">
+                <i class="fa-solid fa-database"></i>
+              </div>
+              <h3 class="pillar__title">Data &amp; Messaging</h3>
+              <ul class="pillar__list">
+                <li class="pillar__item">PostgreSQL</li>
+                <li class="pillar__item">MySQL</li>
+                <li class="pillar__item">MongoDB</li>
+                <li class="pillar__item">Redis</li>
+                <li class="pillar__item">Elasticsearch</li>
+                <li class="pillar__item">Kafka</li>
+                <li class="pillar__item">RocketMQ</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= WORK (carousel) ================= -->
+      <section class="stripe stripe--paper" id="work">
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">Experience</p>
+          <h2 class="stripe__title">Where I have worked</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <p class="stripe__lede">
+            Four internships across storage, IoT, streaming backends and
+            campus infrastructure. Drag, swipe or use the arrows.
+          </p>
+
+          <div
+            class="carousel"
+            id="work-carousel"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Selected projects"
+            tabindex="0"
+          >
+            <div class="carousel__viewport">
+              <ul class="carousel__track">
+                <li
+                  class="carousel__slide"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label="1 of 4"
+                >
+                  <article class="slide slide--tint-1">
+                    <div class="slide__media">
+                      <img
+                        class="slide__image"
+                        src="assets/work-1.jpg"
+                        alt="Solidigm's SSD and NAND engineering site in Rancho Cordova"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="slide__body">
+                      <p class="slide__eyebrow">Solidigm · 2026</p>
+                      <h3 class="slide__title">SSD failure triage</h3>
+                      <p class="slide__text">
+                        Built an LLM-powered agent that reads firmware and diagnostic logs to decide whether chip-level failures share a root cause. Containerised the test suite on Kubernetes so 200+ drives are processed in parallel.
+                      </p>
+                      <div class="slide__meta">
+                        <span class="slide__tag">Python</span>
+                        <span class="slide__tag">MCP</span>
+                        <span class="slide__tag">Kubernetes</span>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+
+                <li
+                  class="carousel__slide"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label="2 of 4"
+                >
+                  <article class="slide slide--tint-2">
+                    <div class="slide__media">
+                      <img
+                        class="slide__image"
+                        src="assets/work-2.jpg"
+                        alt="The CITRIS and Banatao Institute warehouse telemetry dashboard"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="slide__body">
+                      <p class="slide__eyebrow">CITRIS · 2025</p>
+                      <h3 class="slide__title">IoT telemetry</h3>
+                      <p class="slide__text">
+                        A React and TypeScript platform with real-time alerting over distributed Flask microservices, serving ten-plus warehouses across North America. Terraform handled the provisioning.
+                      </p>
+                      <div class="slide__meta">
+                        <span class="slide__tag">React</span>
+                        <span class="slide__tag">Flask</span>
+                        <span class="slide__tag">Terraform</span>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+
+                <li
+                  class="carousel__slide"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label="3 of 4"
+                >
+                  <article class="slide slide--tint-3">
+                    <div class="slide__media">
+                      <img
+                        class="slide__image"
+                        src="assets/work-3.jpg"
+                        alt="The Elile AI corporate platform backend"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="slide__body">
+                      <p class="slide__eyebrow">Elile AI · 2024</p>
+                      <h3 class="slide__title">Streaming backend</h3>
+                      <p class="slide__text">
+                        A Node.js microservices backend for 1,000+ weekly users, fronted by REST APIs that scaled past 2,000 requests a minute, with Kafka fanning events out to RDS and S3.
+                      </p>
+                      <div class="slide__meta">
+                        <span class="slide__tag">Node.js</span>
+                        <span class="slide__tag">Kafka</span>
+                        <span class="slide__tag">AWS</span>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+
+                <li
+                  class="carousel__slide"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label="4 of 4"
+                >
+                  <article class="slide slide--tint-4">
+                    <div class="slide__media">
+                      <img
+                        class="slide__image"
+                        src="assets/work-4.jpg"
+                        alt="The ASUCD Pantry online ordering system at UC Davis"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="slide__body">
+                      <p class="slide__eyebrow">ASUCD Pantry · 2024</p>
+                      <h3 class="slide__title">Campus ordering platform</h3>
+                      <p class="slide__text">
+                        An eCommerce ordering system for 40,000 UC Davis students, built on React, Django and PostgreSQL with streaming replication and a two-layer Redis and Nginx cache.
+                      </p>
+                      <div class="slide__meta">
+                        <span class="slide__tag">Django</span>
+                        <span class="slide__tag">PostgreSQL</span>
+                        <span class="slide__tag">Redis</span>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              class="carousel__arrow carousel__arrow--prev"
+              type="button"
+              aria-label="Previous project"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M15 4 7 12l8 8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+
+            <button
+              class="carousel__arrow carousel__arrow--next"
+              type="button"
+              aria-label="Next project"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M9 4l8 8-8 8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+
+            <div class="carousel__dots" role="tablist" aria-label="Choose a project"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= IMPACT (fixed background) ================= -->
+      <section class="stripe parallax" id="impact">
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">Impact</p>
+          <h2 class="stripe__title">By the numbers</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <p class="stripe__lede">
+            Measured outcomes from three engineering internships and a run of
+            distributed-systems projects.
+          </p>
+
+          <div class="stats">
+            <div class="stat">
+              <p class="stat__value">75<span class="stat__unit">%</span></p>
+              <p class="stat__label">
+                Less manual effort per batch of SSD failure analysis at
+                Solidigm
+              </p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">45<span class="stat__unit">min</span></p>
+              <p class="stat__label">
+                End-to-end triage across 200+ drives, down from four hours
+              </p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">75<span class="stat__unit">ms</span></p>
+              <p class="stat__label">
+                p99 latency on a Go payments service, down from 530&nbsp;ms
+              </p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">40<span class="stat__unit">K+</span></p>
+              <p class="stat__label">
+                Students served by the ordering platform built for the ASUCD
+                Pantry
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PROJECTS (modals) ================= -->
+      <section class="stripe stripe--paper" id="projects">
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">Projects</p>
+          <h2 class="stripe__title">Systems I have built</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <p class="stripe__lede">
+            Three systems projects, taken from design through fault
+            injection. Open any tile for the architecture and the numbers.
+          </p>
+
+          <div class="cards">
+
+
+
+            <!-- 1 -->
+            <article class="card">
+              <button class="card__trigger" type="button" aria-haspopup="dialog">
+                <img
+                  class="card__image"
+                  src="assets/case-1.jpg"
+                  alt=""
+                  loading="lazy"
+                />
+                <span class="card__overlay" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <span class="card__caption">
+                  <span class="card__kicker">Project</span>
+                  <span class="card__title">Distributed donation platform</span>
+                </span>
+              </button>
+              <template class="card__detail">
+                <img class="modal__media" src="assets/case-1.jpg" alt="" />
+                <div class="modal__body">
+                  <p class="modal__kicker">Systems project</p>
+                  <h3 class="modal__title">Distributed donation platform</h3>
+                  <p class="modal__meta">
+                    Go · gRPC/Protobuf · Raft · PostgreSQL · AWS EKS
+                  </p>
+                  <ul class="modal__list">
+                    <li>
+                      Four Go microservices providing exactly-once payment
+                      processing on a fault-tolerant donation platform.
+                    </li>
+                    <li>
+                      Batched JOIN/IN queries with sqlx cut database
+                      round-trips from 120 to 8 and p99 latency from 530 ms to
+                      75 ms.
+                    </li>
+                    <li>
+                      Integrated etcd/raft across a three-node replicated state
+                      machine for strongly consistent writes, with leader
+                      failover under two seconds during fault injection.
+                    </li>
+                    <li>
+                      Deployed on EKS for zero-downtime releases.
+                    </li>
+                  </ul>
+                  <div class="modal__stack">
+                    <span class="modal__tag">Go</span>
+                    <span class="modal__tag">gRPC</span>
+                    <span class="modal__tag">Raft</span>
+                    <span class="modal__tag">PostgreSQL</span>
+                  </div>
+                </div>
+              </template>
+            </article>
+
+            <!-- 2 -->
+            <article class="card">
+              <button class="card__trigger" type="button" aria-haspopup="dialog">
+                <img
+                  class="card__image"
+                  src="assets/case-2.jpg"
+                  alt=""
+                  loading="lazy"
+                />
+                <span class="card__overlay" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <span class="card__caption">
+                  <span class="card__kicker">Project</span>
+                  <span class="card__title">Transaction processing engine</span>
+                </span>
+              </button>
+              <template class="card__detail">
+                <img class="modal__media" src="assets/case-2.jpg" alt="" />
+                <div class="modal__body">
+                  <p class="modal__kicker">Systems project</p>
+                  <h3 class="modal__title">Transaction processing engine</h3>
+                  <p class="modal__meta">
+                    C++ · gRPC/Protobuf · Boost.Asio · CockroachDB
+                  </p>
+                  <ul class="modal__list">
+                    <li>
+                      Thirteen C++ microservices behind a high-throughput
+                      transaction engine, validated at 1.2K end-to-end QPS.
+                    </li>
+                    <li>
+                      A Boost.Asio async runtime with backpressure held p99
+                      intra-VPC latency at 2–5 ms.
+                    </li>
+                    <li>
+                      A lock-free ring buffer pipeline sustained 100K events per
+                      second at under 5% CPU.
+                    </li>
+                    <li>
+                      CockroachDB under serializable isolation recovered the
+                      cluster within 30 seconds during fault injection.
+                    </li>
+                  </ul>
+                  <div class="modal__stack">
+                    <span class="modal__tag">C++</span>
+                    <span class="modal__tag">Boost.Asio</span>
+                    <span class="modal__tag">CockroachDB</span>
+                  </div>
+                </div>
+              </template>
+            </article>
+
+            <!-- 3 -->
+            <article class="card">
+              <button class="card__trigger" type="button" aria-haspopup="dialog">
+                <img
+                  class="card__image"
+                  src="assets/case-3.jpg"
+                  alt=""
+                  loading="lazy"
+                />
+                <span class="card__overlay" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </span>
+                <span class="card__caption">
+                  <span class="card__kicker">Project</span>
+                  <span class="card__title">Customer service automation</span>
+                </span>
+              </button>
+              <template class="card__detail">
+                <img class="modal__media" src="assets/case-3.jpg" alt="" />
+                <div class="modal__body">
+                  <p class="modal__kicker">Applied ML project</p>
+                  <h3 class="modal__title">Customer service automation</h3>
+                  <p class="modal__meta">
+                    LangChain · RAG · LangSmith · Python
+                  </p>
+                  <ul class="modal__list">
+                    <li>
+                      A LangChain multi-agent system — intent router, RAG,
+                      dynamic pricing and human escalation — handling 10,000+
+                      inquiries a month.
+                    </li>
+                    <li>
+                      71.4% of those resolved with no human touch.
+                    </li>
+                    <li>
+                      Hybrid retrieval combining BM25 with dense embeddings,
+                      evaluated through LangSmith, cut token costs by 20%.
+                    </li>
+                    <li>
+                      Pricing accuracy improved by 27% over the baseline.
+                    </li>
+                  </ul>
+                  <div class="modal__stack">
+                    <span class="modal__tag">Python</span>
+                    <span class="modal__tag">LangChain</span>
+                    <span class="modal__tag">RAG</span>
+                  </div>
+                </div>
+              </template>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= REEL (background video) ================= -->
+      <section class="stripe video-band" id="reel">
+        <!-- Decorative background: no controls, muted so the browser
+             will actually autoplay it, looping indefinitely. -->
+        <video
+          class="video-band__video"
+          id="reel-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          poster="assets/reel-poster.jpg"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <source src="assets/reel.mp4" type="video/mp4" />
+        </video>
+        <div class="video-band__scrim" aria-hidden="true"></div>
+
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">Reel</p>
+          <h2 class="stripe__title">Where I study</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <p class="stripe__lede">
+            Grainger Engineering at the University of Illinois
+            Urbana-Champaign, where I am finishing my MSCS.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= CONTACT ================= -->
+      <section class="stripe stripe--accent" id="contact">
+        <div class="stripe__inner">
+          <p class="stripe__eyebrow">Contact</p>
+          <h2 class="stripe__title">Let's build something</h2>
+          <div class="stripe__divider" aria-hidden="true"></div>
+          <p class="stripe__lede">
+            I am looking for summer 2027 internships in distributed systems
+            and backend infrastructure. The inbox is always open.
+          </p>
+
+          <div class="contact">
+            <div class="contact__details">
+              <p class="contact__item">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                <a href="mailto:weichenzhang2025@gmail.com"
+                  >weichenzhang2025@gmail.com</a
+                >
+              </p>
+              <p class="contact__item">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <span>Champaign, Illinois</span>
+              </p>
+              <p class="contact__item">
+                <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                <span>MSCS, UIUC — May 2027</span>
+              </p>
+              <p class="contact__item">
+                <i class="fa-solid fa-code-branch" aria-hidden="true"></i>
+                <span>Open to internships &amp; new grad roles</span>
+              </p>
+            </div>
+
+            <!-- Requirement 16 — social media icons -->
+            <ul class="social">
+              <li>
+                <a
+                  class="social__link"
+                  href="https://github.com/WeichenZhang89"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Weichen Zhang on GitHub"
+                >
+                  <i class="fa-brands fa-github" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="social__link"
+                  href="https://www.linkedin.com/in/weichenzhang/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Weichen Zhang on LinkedIn"
+                >
+                  <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="social__link"
+                  href="mailto:weichenzhang2025@gmail.com"
+                  aria-label="Email Weichen Zhang"
+                >
+                  <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= MODAL =================
+         One dialog serves all six cards; its contents are cloned in
+         from the card's own <template> when it opens. -->
+    <dialog class="modal" id="case-modal" aria-labelledby="case-modal-body">
+      <button class="modal__close" type="button" aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+      <div class="modal__scroll">
+        <div id="case-modal-body"></div>
+      </div>
+    </dialog>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="footer__top">
+        <div>
+          <h3 class="footer__heading">Location</h3>
+          <p class="footer__text">Champaign, Illinois<br />United States</p>
+        </div>
+        <div>
+          <h3 class="footer__heading">Around the web</h3>
+          <ul class="social">
+            <li>
+              <a
+                class="social__link"
+                href="https://github.com/WeichenZhang89"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Weichen Zhang on GitHub"
+              >
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                class="social__link"
+                href="https://www.linkedin.com/in/weichenzhang/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Weichen Zhang on LinkedIn"
+              >
+                <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                class="social__link"
+                href="mailto:weichenzhang2025@gmail.com"
+                aria-label="Email Weichen Zhang"
+              >
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">About this site</h3>
+          <p class="footer__text">
+            Hand-built with HTML5, SCSS and vanilla JavaScript — no frameworks,
+            no component libraries.
+          </p>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <div class="footer__bottom-inner">
+          <p>&copy; 2026 Weichen Zhang · CS409 MP1</p>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>

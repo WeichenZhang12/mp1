@@ -1,1 +1,20 @@
-/* Your SCSS here. */
+/* =========================================================
+   MP1 — single-page portfolio
+   Entry stylesheet: tokens first, then element defaults,
+   then the layout system, then component partials.
+   ========================================================= */
+
+@use "variables";
+@use "mixins";
+
+@use "base";
+@use "layout";
+@use "navbar";
+@use "hero";
+@use "skills";
+@use "carousel";
+@use "parallax";
+@use "modal";
+@use "reel";
+@use "footer";
+@use "social";

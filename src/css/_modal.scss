@@ -1,0 +1,313 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirement 11 — modal windows
+   Built on the native <dialog> element, so Esc-to-close,
+   focus trapping, the backdrop and inerting the rest of the
+   page all come from the browser rather than from JS.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Card grid — the modal triggers
+   --------------------------------------------------------- */
+.cards {
+  display: grid;
+  gap: $space-lg;
+  width: 100%;
+  grid-template-columns: 1fr;
+
+  @include respond("sm") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond("lg") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  &__trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: $radius-md;
+    background: none;
+    text-align: left;
+    box-shadow: $shadow-sm;
+    transition: transform $duration-base $ease-out,
+      box-shadow $duration-base $ease-out;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  /* Hover veil with a zoom affordance, so it is obvious the tile
+     opens something rather than navigating away. */
+  &__overlay {
+    @include center;
+    position: absolute;
+    inset: 0;
+    background-color: rgba($color-accent, 0.88);
+    color: #fff;
+    opacity: 0;
+    transition: opacity $duration-base $ease-out;
+
+    svg {
+      width: 40px;
+      height: 40px;
+      transform: scale(0.7);
+      transition: transform $duration-base $ease-out;
+    }
+  }
+
+  &__trigger:hover &__overlay,
+  &__trigger:focus-visible &__overlay {
+    opacity: 1;
+
+    svg {
+      transform: scale(1);
+    }
+  }
+
+  &__caption {
+    display: block;
+    padding: $space-md $space-lg $space-lg;
+    background-color: $color-paper;
+  }
+
+  &__kicker {
+    display: block;
+    margin-bottom: 2px;
+    color: $color-accent;
+    font-family: $font-display;
+    font-size: 11px;
+    font-weight: $weight-bold;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    display: block;
+    color: $color-text;
+    font-family: $font-display;
+    font-size: 18px;
+    font-weight: $weight-bold;
+  }
+}
+
+/* ---------------------------------------------------------
+   The dialog
+   --------------------------------------------------------- */
+.modal {
+  width: min(680px, calc(100vw - #{$space-xl}));
+  max-height: min(86vh, 900px);
+  padding: 0;
+  border: 0;
+  border-radius: $radius-lg;
+  background-color: $color-paper;
+  color: $color-text;
+  box-shadow: $shadow-lg;
+  // <dialog> is centred by the UA, but only once it has a margin of
+  // auto on every side — Chrome's default sets `margin: auto` already,
+  // this makes it explicit so the box stays centred at any size.
+  margin: auto;
+  overflow: hidden;
+
+  &::backdrop {
+    background-color: rgba($color-ink, 0.72);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Requirement 14 — the dialog and its backdrop fade and lift in. */
+  &[open] {
+    animation: modal-in $duration-base $ease-out both;
+
+    &::backdrop {
+      animation: backdrop-in $duration-base $ease-out both;
+    }
+  }
+
+  /* Closing is animated too; JS waits for this to finish before it
+     actually calls close(). */
+  &.is-closing {
+    animation: modal-out $duration-fast ease-in both;
+
+    &::backdrop {
+      animation: backdrop-out $duration-fast ease-in both;
+    }
+  }
+
+  &__scroll {
+    max-height: inherit;
+    overflow-y: auto;
+    overscroll-behavior: contain; // don't chain scrolling to the page
+  }
+
+  &__close {
+    position: absolute;
+    top: $space-md;
+    right: $space-md;
+    z-index: 2;
+    @include center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: rgba($color-ink, 0.55);
+    color: #fff;
+    transition: background-color $duration-fast $ease-out,
+      transform $duration-fast $ease-out;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-accent;
+      transform: rotate(90deg);
+    }
+  }
+
+  &__media {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+  }
+
+  &__body {
+    padding: clamp(#{$space-lg}, 4vw, #{$space-2xl});
+  }
+
+  &__kicker {
+    margin-bottom: $space-xs;
+    color: $color-accent;
+    font-family: $font-display;
+    font-size: 12px;
+    font-weight: $weight-bold;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin-bottom: $space-sm;
+  }
+
+  &__meta {
+    margin-bottom: $space-lg;
+    color: $color-text-muted;
+    font-size: 14px;
+  }
+
+  &__list {
+    margin-bottom: $space-lg;
+
+    li {
+      position: relative;
+      padding-left: $space-lg;
+      margin-bottom: $space-sm;
+      color: $color-text-muted;
+      font-size: 15px;
+
+      // Custom marker: the list is reset globally, and a CSS-drawn
+      // bullet tints with the accent where a native one cannot.
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.65em;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: $color-accent;
+      }
+    }
+  }
+
+  &__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+  }
+
+  &__tag {
+    padding: 4px $space-md;
+    border: 1px solid rgba($color-ink, 0.16);
+    border-radius: 999px;
+    font-size: 13px;
+    color: $color-text-muted;
+  }
+}
+
+/* Locks the page behind the dialog. Some browsers still scroll the
+   document under a modal <dialog> when the wheel is over the backdrop. */
+body.has-modal {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   Keyframes
+   --------------------------------------------------------- */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal[open],
+  .modal[open]::backdrop,
+  .modal.is-closing,
+  .modal.is-closing::backdrop {
+    animation-duration: 1ms;
+  }
+}

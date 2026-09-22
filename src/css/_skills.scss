@@ -1,0 +1,78 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Requirement 7 — multi-column layout
+   Four equal columns on wide screens, collapsing to two and
+   then one. `auto-fit` + `minmax` does the collapsing without
+   a breakpoint per step: a column is never allowed to get
+   narrower than its minimum, so the grid re-flows itself.
+   ========================================================= */
+
+.pillars {
+  display: grid;
+  gap: $space-xl;
+  width: 100%;
+  grid-template-columns: 1fr;
+
+  @include respond("sm") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond("lg") {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-lg;
+  }
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  /* Circled icon, echoing the reference layout. The ring is a
+     border rather than an image, so it stays crisp at any size. */
+  &__icon {
+    @include center;
+    width: 74px;
+    height: 74px;
+    margin-bottom: $space-lg;
+    border: 2px solid rgba($color-ink, 0.18);
+    border-radius: 50%;
+    color: $color-accent;
+    transition: border-color $duration-base $ease-out,
+      color $duration-base $ease-out, transform $duration-base $ease-out;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &:hover &__icon {
+    border-color: $color-accent;
+    transform: translateY(-4px) scale(1.06);
+  }
+
+  &__title {
+    margin-bottom: $space-md;
+    font-size: 19px;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $space-xs $space-sm;
+  }
+
+  &__item {
+    padding: 3px $space-sm;
+    border-radius: $radius-sm;
+    background-color: rgba($color-ink, 0.05);
+    color: $color-text-muted;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}

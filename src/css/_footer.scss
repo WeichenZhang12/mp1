@@ -1,0 +1,57 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =========================================================
+   Footer stripe (the <footer> band of requirement 1)
+   ========================================================= */
+
+.footer {
+  width: 100%;
+  background-color: $color-ink;
+  color: $color-text-invert;
+
+  &__top {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-xl;
+    padding-block: $space-2xl;
+    text-align: center;
+
+    @include respond("md") {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__heading {
+    margin-bottom: $space-md;
+    font-family: $font-display;
+    font-size: 14px;
+    font-weight: $weight-bold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  &__text {
+    margin: 0;
+    color: $color-text-invert-muted;
+    font-size: 15px;
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+
+  &__bottom-inner {
+    @include container;
+    @include center;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    padding-block: $space-lg;
+    color: rgba(244, 247, 251, 0.55);
+    font-size: 14px;
+    text-align: center;
+  }
+}
